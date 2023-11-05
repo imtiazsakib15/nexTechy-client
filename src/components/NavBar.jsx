@@ -1,5 +1,5 @@
 import SectionContainer from "./SectionContainer";
-import logo from "./../../public/logo.png";
+import logo from "/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useState } from "react";
