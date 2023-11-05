@@ -2,53 +2,26 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
-import auth from "../config/firebase.config";
-import { updateProfile } from "firebase/auth";
 
-const Register = () => {
-  const { createUser, googleSignIn } = useAuth();
+const Login = () => {
+  const { signIn, googleSignIn } = useAuth();
   const navigate = useNavigate();
 
-  const handleRegister = (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
 
-    const name = form.name.value;
-    const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
 
-    if (
-      !/[0-9]/.test(password) &&
-      !/[A-Z]/.test(password) &&
-      !/[^a-zA-Z0-9]/.test(password)
-    ) {
-      toast.error(
-        "Password have a capital letter, a special character and  a numeric character"
-      );
-      return;
-    }
-    const registerToastId = toast.loading("Please Wait");
-
-    createUser(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        toast.success("Register Successfully!", { id: registerToastId });
-
-        updateProfile(auth.currentUser, {
-          displayName: name,
-          photoURL: photo,
-        })
-          .then(() => {})
-          .catch((error) => {
-            toast.error(error.message, { id: registerToastId });
-          });
-        user.displayName = name;
-        user.photoURL = photo;
+    const loginToastId = toast.loading("Please Wait");
+    signIn(email, password)
+      .then(() => {
+        toast.success("Log In Successfully!", { id: loginToastId });
         navigate("/");
       })
       .catch((error) => {
-        toast.error(error.message);
+        toast.error(error.message, { id: loginToastId });
       });
   };
 
@@ -66,38 +39,8 @@ const Register = () => {
 
   return (
     <div className="max-w-xl py-6 px-4 md:px-8 lg:py-14 mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-5">Register Now!</h2>
-      <form onSubmit={handleRegister}>
-        <div className="mb-6">
-          <label
-            htmlFor="name"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Your name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            required
-          />
-        </div>
-        <div className="mb-6">
-          <label
-            htmlFor="photo"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Your photo url
-          </label>
-          <input
-            type="text"
-            id="photo"
-            name="photo"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            required
-          />
-        </div>
+      <h2 className="text-4xl font-bold text-center mb-5">Login Now!</h2>
+      <form onSubmit={handleLogin}>
         <div className="mb-6">
           <label
             htmlFor="email"
@@ -128,33 +71,15 @@ const Register = () => {
             required
           />
         </div>
-        <div className="flex items-start mb-6">
-          <div className="flex items-center h-5">
-            <input
-              id="terms"
-              type="checkbox"
-              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-              required
-            />
-          </div>
-          <label
-            htmlFor="terms"
-            className="ml-2 text-sm font-medium text-gray-900"
-          >
-            I agree with the{" "}
-            <Link to="/register" className="text-blue-600 hover:underline">
-              terms and conditions
-            </Link>
-          </label>
-        </div>
+
         <div className="sm:flex sm:items-center sm:justify-between">
           <button type="submit">
-            <Button>Register new account</Button>
+            <Button>Login your account</Button>
           </button>
           <p className="text-sm mt-4 sm:mt-0 text-gray-900 font-medium">
-            Already have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link className="text-blue-600 hover:underline" to="/login">
-              Login now
+              Register now
             </Link>
           </p>
         </div>
@@ -199,4 +124,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
