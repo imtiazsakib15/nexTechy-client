@@ -23,7 +23,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="border-b shadow-md sticky top-0 bg-white">
+    <div className="border-b shadow-md sticky top-0 bg-white z-10">
       <SectionContainer>
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-1 p-1 my-4">
