@@ -3,9 +3,25 @@ import logo from "/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
+import Button from "./Button";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
+  const { user, logOut } = useAuth();
   const [isShowNav, setIsShowNav] = useState(false);
+
+  const handleLogOut = () => {
+    const logOutToastId = toast.loading("Please Wait");
+    logOut()
+      .then(() => {
+        toast.success("Log In Successfully!", { id: logOutToastId });
+      })
+      .catch((error) => {
+        toast.error(error.message, { id: logOutToastId });
+      });
+  };
+
   return (
     <div className="border-b shadow-md sticky top-0 bg-white">
       <SectionContainer>
@@ -75,28 +91,36 @@ const NavBar = () => {
               >
                 Wishlist
               </NavLink>
-              <NavLink
-                to="/login"
-                onClick={() => setIsShowNav(false)}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-blue-600 underline font-semibold px-1 py-1"
-                    : "font-semibold px-1 py-1"
-                }
-              >
-                Login
-              </NavLink>
-              <NavLink
-                to="/register"
-                onClick={() => setIsShowNav(false)}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-blue-600 underline font-semibold px-1 py-1"
-                    : "font-semibold px-1 py-1"
-                }
-              >
-                Register
-              </NavLink>
+              {user?.email ? (
+                <button onClick={handleLogOut} className="w-max">
+                  <Button>Log Out</Button>
+                </button>
+              ) : (
+                <>
+                  <NavLink
+                    to="/login"
+                    onClick={() => setIsShowNav(false)}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 underline font-semibold px-1 py-1"
+                        : "font-semibold px-1 py-1"
+                    }
+                  >
+                    Login
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    onClick={() => setIsShowNav(false)}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 underline font-semibold px-1 py-1"
+                        : "font-semibold px-1 py-1"
+                    }
+                  >
+                    Register
+                  </NavLink>
+                </>
+              )}
             </div>
             <div
               onClick={() => setIsShowNav(!isShowNav)}
@@ -104,7 +128,13 @@ const NavBar = () => {
             >
               {isShowNav ? <AiOutlineClose /> : <AiOutlineMenu />}
             </div>
-            <div className="hidden">pic</div>
+            {user?.email && (
+              <img
+                className="w-8 h-8 rounded-full"
+                src={user?.photoURL}
+                alt="User Image"
+              />
+            )}
           </div>
         </div>
       </SectionContainer>
