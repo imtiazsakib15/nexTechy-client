@@ -15,7 +15,7 @@ const NavBar = () => {
     const logOutToastId = toast.loading("Please Wait");
     logOut()
       .then(() => {
-        toast.success("Log In Successfully!", { id: logOutToastId });
+        toast.success("Log Out Successfully!", { id: logOutToastId });
       })
       .catch((error) => {
         toast.error(error.message, { id: logOutToastId });

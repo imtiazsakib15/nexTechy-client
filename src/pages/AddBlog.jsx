@@ -1,11 +1,150 @@
-
+import { useMutation } from "@tanstack/react-query";
+import Button from "../components/Button";
+import SectionContainer from "../components/SectionContainer";
+import useAuth from "../hooks/useAuth";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const AddBlog = () => {
-    return (
-        <div>
-            add blog
-        </div>
-    );
+  const { user } = useAuth();
+  const mutation = useMutation({
+    mutationFn: (newBlog) => {
+      return axios.post("http://localhost:5000/api/v1/blogs/new", newBlog);
+    },
+  });
+
+  const handleAddBlog = (event) => {
+    event.preventDefault();
+    const form = event.target;
+
+    const title = form.title.value;
+    const image = form.image.value;
+    const category = form.category.value;
+    const short_desc = form.short_desc.value;
+    const long_desc = form.long_desc.value;
+
+    const time = Date.now();
+    const author = {
+      email: user.email,
+      name: user.displayName,
+      photo: user.photoURL,
+    };
+
+    const blog = {
+      title,
+      image,
+      category,
+      short_desc,
+      long_desc,
+      time,
+      author,
+    };
+
+    mutation.mutate(blog);
+    if (mutation?.data?.data?.insertedId) {
+      toast.success("Add Blog Successfully!");
+      form.reset();
+    }
+  };
+  return (
+    <div className="mt-12 mb-20">
+      <SectionContainer>
+        <h2 className="text-4xl font-semibold text-center">Add New Blog</h2>
+        <form onSubmit={handleAddBlog}>
+          <div className="mb-6">
+            <label
+              htmlFor="title"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Blog Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="image"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Image URL
+            </label>
+            <input
+              type="text"
+              id="image"
+              name="image"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="category"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Select Categort
+            </label>
+            <select
+              id="category"
+              name="category"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            >
+              <option value="Coding and Development">
+                Coding and Development
+              </option>
+              <option value="AI and Machine Learning">
+                AI and Machine Learning
+              </option>
+              <option value="Internet of Things (IoT)">
+                Internet of Things (IoT)
+              </option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Digital Marketing and SEO">
+                Digital Marketing and SEO
+              </option>
+            </select>
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="short_desc"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Short Description
+            </label>
+            <textarea
+              id="short_desc"
+              name="short_desc"
+              rows="2"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              required
+            ></textarea>
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="long_desc"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Long Description
+            </label>
+            <textarea
+              id="long_desc"
+              name="long_desc"
+              rows="5"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              required
+            ></textarea>
+          </div>
+          <button className="mt-5 w-full" type="submit">
+            <Button>Add New Blog</Button>
+          </button>
+        </form>
+      </SectionContainer>
+    </div>
+  );
 };
 
 export default AddBlog;

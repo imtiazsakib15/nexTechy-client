@@ -5,6 +5,7 @@ import AddBlog from "../pages/AddBlog";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
+import AllBlogs from "../pages/AllBlogs";
 
 const Router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const Router = createBrowserRouter([
       {
         path: "/add-blog",
         element: <AddBlog />,
+      },
+      {
+        path: "/all-blogs",
+        element: <AllBlogs />,
       },
       {
         path: "/register",
