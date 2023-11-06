@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
@@ -6,6 +6,8 @@ import useAuth from "../hooks/useAuth";
 const Login = () => {
   const { signIn, googleSignIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -18,7 +20,7 @@ const Login = () => {
     signIn(email, password)
       .then(() => {
         toast.success("Log In Successfully!", { id: loginToastId });
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         toast.error(error.message, { id: loginToastId });
@@ -30,7 +32,7 @@ const Login = () => {
     googleSignIn()
       .then(() => {
         toast.success("Sign In Successfully!", { id: googleLoginToastId });
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         toast.error(error.message, { id: googleLoginToastId });
