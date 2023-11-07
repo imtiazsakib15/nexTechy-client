@@ -1,15 +1,25 @@
 import { useMutation } from "@tanstack/react-query";
 import Button from "../components/Button";
 import SectionContainer from "../components/SectionContainer";
-import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
-const AddBlog = () => {
-  const { user } = useAuth();
+const UpdateBlog = () => {
+  const { id } = useParams();
+  const [blog, setBlog] = useState({});
+
+  axios.get(`http://localhost:5000/api/v1/blogs/${id}`).then((res) => {
+    setBlog(res.data);
+  });
+
   const mutation = useMutation({
-    mutationFn: async(newBlog) => {
-      return await axios.post("http://localhost:5000/api/v1/blogs/new", newBlog);
+    mutationFn: async (updatedBlog) => {
+      return await axios.patch(
+        `http://localhost:5000/api/v1/blogs/update/${id}/edit`,
+        updatedBlog
+      );
     },
   });
 
@@ -24,33 +34,19 @@ const AddBlog = () => {
     const long_desc = form.long_desc.value;
 
     const time = Date.now();
-    const author = {
-      email: user.email,
-      name: user.displayName,
-      photo: user.photoURL,
-    };
 
-    const blog = {
-      title,
-      image,
-      category,
-      short_desc,
-      long_desc,
-      time,
-      author,
-    };
-
-     mutation.mutate(blog);
-    if (mutation?.data?.data?.insertedId) {
-      console.log(mutation?.data);
-      toast.success("Add Blog Successfully!");
-      form.reset();
+    const blog = { title, image, category, short_desc, long_desc, time };
+    mutation.mutate(blog);
+    
+    if (mutation?.data?.data?.modifiedCount) {
+      toast.success("Blog Updated Successfully!");
     }
   };
+
   return (
     <div className="mt-12 mb-20">
       <SectionContainer>
-        <h2 className="text-4xl font-semibold text-center">Add New Blog</h2>
+        <h2 className="text-4xl font-semibold text-center">Update Blog</h2>
         <form onSubmit={handleAddBlog}>
           <div className="mb-6">
             <label
@@ -63,6 +59,7 @@ const AddBlog = () => {
               type="text"
               id="title"
               name="title"
+              defaultValue={blog?.title}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
             />
@@ -78,6 +75,7 @@ const AddBlog = () => {
               type="text"
               id="image"
               name="image"
+              defaultValue={blog?.image}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
             />
@@ -94,6 +92,7 @@ const AddBlog = () => {
               name="category"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             >
+              <option value={blog?.category}>{blog?.category}</option>
               <option value="Coding and Development">
                 Coding and Development
               </option>
@@ -119,6 +118,7 @@ const AddBlog = () => {
             <textarea
               id="short_desc"
               name="short_desc"
+              defaultValue={blog?.short_desc}
               rows="2"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               required
@@ -134,13 +134,14 @@ const AddBlog = () => {
             <textarea
               id="long_desc"
               name="long_desc"
+              defaultValue={blog?.long_desc}
               rows="5"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               required
             ></textarea>
           </div>
-          <button className="mt-5 w-full" type="submit">
-            <Button>Add New Blog</Button>
+          <button className="mt-5 w-max text-center" type="submit">
+            <Button>Update Blog</Button>
           </button>
         </form>
       </SectionContainer>
@@ -148,4 +149,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default UpdateBlog;

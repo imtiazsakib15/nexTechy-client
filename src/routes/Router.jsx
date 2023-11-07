@@ -8,6 +8,7 @@ import ErrorPage from "../pages/ErrorPage";
 import AllBlogs from "../pages/AllBlogs";
 import PrivateRoute from "./PrivateRoute";
 import BlogDetails from "../pages/BlogDetails";
+import UpdateBlog from "../pages/UpdateBlog";
 
 const Router = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ const Router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <BlogDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/blogs/update/:id/edit",
+        element: (
+          <PrivateRoute>
+            <UpdateBlog />
           </PrivateRoute>
         ),
       },
