@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
 import AllBlogs from "../pages/AllBlogs";
 import PrivateRoute from "./PrivateRoute";
+import BlogDetails from "../pages/BlogDetails";
 
 const Router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const Router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/blogs/:id",
+        element: (
+          <PrivateRoute>
+            <BlogDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
