@@ -6,7 +6,7 @@ import BlogCard from "./BlogCard";
 
 const RecentBlogs = () => {
   const { isLoading, error, data } = useQuery({
-    queryKey: ["allBlogs"],
+    queryKey: ["recentBlogs"],
     queryFn: () => axios.get("http://localhost:5000/api/v1/recent-blogs"),
   });
   const blogs = data?.data || [];
