@@ -8,8 +8,11 @@ import toast from "react-hot-toast";
 const AddBlog = () => {
   const { user } = useAuth();
   const mutation = useMutation({
-    mutationFn: async(newBlog) => {
-      return await axios.post("http://localhost:5000/api/v1/blogs/new", newBlog);
+    mutationFn: async (newBlog) => {
+      return await axios.post(
+        "http://localhost:5000/api/v1/blogs/new",
+        newBlog
+      );
     },
   });
 
@@ -40,7 +43,7 @@ const AddBlog = () => {
       author,
     };
 
-     mutation.mutate(blog);
+    mutation.mutate(blog);
     if (mutation?.data?.data?.insertedId) {
       console.log(mutation?.data);
       toast.success("Add Blog Successfully!");
@@ -139,9 +142,11 @@ const AddBlog = () => {
               required
             ></textarea>
           </div>
-          <button className="mt-5 w-full" type="submit">
-            <Button>Add New Blog</Button>
-          </button>
+          <div className="mt-5 w-max mx-auto">
+            <button type="submit">
+              <Button>Add New Blog</Button>
+            </button>
+          </div>
         </form>
       </SectionContainer>
     </div>

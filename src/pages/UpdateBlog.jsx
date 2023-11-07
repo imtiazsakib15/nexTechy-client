@@ -37,7 +37,7 @@ const UpdateBlog = () => {
 
     const blog = { title, image, category, short_desc, long_desc, time };
     mutation.mutate(blog);
-    
+
     if (mutation?.data?.data?.modifiedCount) {
       toast.success("Blog Updated Successfully!");
     }
@@ -140,9 +140,11 @@ const UpdateBlog = () => {
               required
             ></textarea>
           </div>
-          <button className="mt-5 w-max text-center" type="submit">
-            <Button>Update Blog</Button>
-          </button>
+          <div className="mt-5 w-max mx-auto">
+            <button type="submit">
+              <Button>Update Blog</Button>
+            </button>
+          </div>
         </form>
       </SectionContainer>
     </div>

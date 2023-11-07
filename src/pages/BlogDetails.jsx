@@ -5,6 +5,8 @@ import useTimeDifference from "../hooks/useTimeDifference";
 import Skeleton from "react-loading-skeleton";
 import Button from "../components/Button";
 import useAuth from "../hooks/useAuth";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 const BlogDetails = () => {
   const { user } = useAuth();
@@ -44,7 +46,7 @@ const BlogDetails = () => {
           </h2>
           <div className="flex gap-3">
             <img
-              className="w-12 h-12 rounded-full"
+              className="w-10 h-10 rounded-full"
               src={author?.photo}
               alt="author's photo"
             />
@@ -58,7 +60,12 @@ const BlogDetails = () => {
             Category:{" "}
             <span className="font-medium text-green-600">{category}</span>
           </p>
-          <img className="w-full rounded pb-6" src={image} alt="" />
+          <PhotoProvider>
+            <PhotoView src={image}>
+              <img className="w-full rounded pb-6" src={image} alt="" />
+            </PhotoView>
+          </PhotoProvider>
+
           <p className="font-medium">{short_desc}</p>
           <p>{long_desc}</p>
           {user?.email === author?.email && (
