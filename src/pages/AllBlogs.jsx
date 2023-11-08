@@ -37,7 +37,7 @@ const AllBlogs = () => {
         <form
           onChange={handleSearch}
           onSubmit={handleSearch}
-          className="flex justify-between items-center pb-5"
+          className="flex flex-col md:flex-row gap-5 justify-between items-center pb-5"
         >
           <div className="flex items-center gap-2">
             <p className="font-semibold">Sort by category:</p>

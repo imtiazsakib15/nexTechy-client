@@ -90,7 +90,7 @@ const BlogCard = ({ blog }) => {
           </span>
         </div>
         <h4 className="text-xl font-bold">{title}</h4>
-        <p>
+        <p className="flex-1">
           {short_desc?.split(" ")?.slice(0, 15)?.join(" ")}{" "}
           <Link
             to={`/blogs/${_id}`}
@@ -109,7 +109,7 @@ const BlogCard = ({ blog }) => {
         ) : (
           <button
             onClick={handleAddToWishlist}
-            className="px-4 py-2 bg-black text-white font-semibold hover:scale-95 duration-200"
+            className="px-4 py-2 bg-black text-white font-semibold hover:scale-95 duration-200 mt-auto"
           >
             Add To Wishlist
           </button>

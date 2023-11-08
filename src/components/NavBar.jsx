@@ -130,7 +130,7 @@ const NavBar = () => {
             </div>
             {user?.email && (
               <img
-                className="w-8 h-8 rounded-full"
+                className="w-8 h-8 rounded-full border-2 border-blue-500"
                 src={user?.photoURL}
                 alt="User Image"
               />

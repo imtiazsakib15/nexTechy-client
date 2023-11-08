@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import useTimeDifference from "../hooks/useTimeDifference";
@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import useAuth from "../hooks/useAuth";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import { BiErrorCircle } from "react-icons/bi";
 
 const BlogDetails = () => {
   const { user } = useAuth();
@@ -21,13 +22,40 @@ const BlogDetails = () => {
   const { author, category, image, long_desc, short_desc, time, title, _id } =
     data?.data || {};
 
+  const addComment = useMutation({
+    mutationFn: async (comment) => {
+      return await axios.post(
+        `http://localhost:5000/api/v1/blogs/comments`,
+        comment
+      );
+    },
+  });
+
+  const handleCommentPost = (event) => {
+    event.preventDefault();
+    const comment = event.target.comment.value;
+    const author = {
+      name: user.displayName,
+      photo: user.photoURL,
+    };
+    const newComment = { comment, author, blogId: _id };
+
+    addComment.mutate(newComment, {
+      onSuccess: (result) => {
+        console.log(result?.data);
+        if (result?.data?.insertedId) {
+          event.target.reset();
+        }
+      },
+    });
+  };
+
   if (error)
     return (
       <h2 className="grid place-items-center h-[80vh] text-xl md:text-4xl font-bold">
         An Error Occured! Please Try Again!
       </h2>
     );
-
   return (
     <div className="max-w-6xl px-4 sm:px-8 md:px-14 mx-auto mt-8 sm:mt-14 mb-20">
       {isLoading ? (
@@ -78,6 +106,43 @@ const BlogDetails = () => {
           )}
         </div>
       )}
+      <div className="mt-8">
+        <hr />
+        <h2 className="text-2xl font-bold mt-5">Comments</h2>
+
+        <div className="mt-5">
+          {user?.email === author?.email ? (
+            <p className="text-red-500 font-semibold flex items-center gap-1">
+              <BiErrorCircle />
+              Author can not comment on own blog
+            </p>
+          ) : (
+            <form onSubmit={handleCommentPost} className="max-w-sm">
+              <label
+                htmlFor="short_desc"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Your Comment
+              </label>
+              <textarea
+                id="comment"
+                name="comment"
+                rows="2"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                required
+              ></textarea>
+              <button
+                type="submit"
+                className="text-white bg-black px-8 py-2 mt-2"
+              >
+                Post
+              </button>
+            </form>
+          )}
+        </div>
+
+        <div className="my-12"></div>
+      </div>
     </div>
   );
 };
