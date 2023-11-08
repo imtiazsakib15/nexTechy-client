@@ -45,7 +45,6 @@ const AddBlog = () => {
 
     addNewBlog.mutate(blog, {
       onSuccess: (result) => {
-        console.log(result?.data);
         if (result?.data?.insertedId) {
           toast.success("Add Blog Successfully!");
           form.reset();
@@ -53,7 +52,7 @@ const AddBlog = () => {
       },
     });
   };
-  
+
   return (
     <div className="mt-12 mb-20">
       <SectionContainer>

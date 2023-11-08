@@ -7,7 +7,7 @@ const Newsletter = () => {
   const handleSubscribe = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
-    console.log(email);
+    
     const subscribeNewsletterId = toast.loading("Please Wait!");
     axios
       .post("http://localhost:5000/api/v1/newsletter-subscriber", { email })

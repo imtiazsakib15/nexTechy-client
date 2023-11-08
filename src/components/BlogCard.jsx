@@ -12,17 +12,17 @@ const BlogCard = ({ blog }) => {
   const calculateTimeDifference = useTimeDifference();
   const { _id, title, category, image, time, short_desc } = blog;
   const { user } = useAuth();
-  const wishlistDetails = useGetWishlist();
+  const { wishlistDetails, wishlistRefetch } = useGetWishlist();
   const updateWishlist = useUpdateWishlist();
   const location = useLocation();
-  console.log(wishlistDetails?.email);
+
   const handleAddToWishlist = () => {
+    const addToWishlistId = toast.loading("Please Wait");
     let newWishlistDetails = {};
     if (wishlistDetails?.email) {
-      const previousWishlist = wishlistDetails.wishlist;
+      const previousWishlist = wishlistDetails?.wishlist;
       if (previousWishlist.includes(_id)) {
-        toast.error("Already Added!");
-        return;
+        return toast.error("Already Added!", { id: addToWishlistId });
       }
       newWishlistDetails = {
         email: user?.email,
@@ -34,14 +34,29 @@ const BlogCard = ({ blog }) => {
 
     updateWishlist.mutate(newWishlistDetails, {
       onSuccess: (result) => {
-        console.log(result?.data);
         if (result?.data?.modifiedCount === 1 || result?.upsertedCount === 1)
-          toast.success("Successfully Add To Wishlist!");
+          toast.success("Successfully Add To Wishlist!", {
+            id: addToWishlistId,
+          });
       },
     });
   };
 
-  const handleDeleteFromWishlist = () => {};
+  const handleDeleteFromWishlist = () => {
+    const previousWishlist = wishlistDetails?.wishlist;
+    const newWishlist = previousWishlist.filter(
+      (wishlistId) => wishlistId !== _id
+    );
+    const newWishlistDetails = { email: user?.email, wishlist: newWishlist };
+
+    updateWishlist.mutate(newWishlistDetails, {
+      onSuccess: (result) => {
+        if (result?.data?.modifiedCount === 1)
+          toast.success("Successfully Removed!");
+        wishlistRefetch();
+      },
+    });
+  };
 
   return (
     <div className="p-5 border shadow rounded">
@@ -78,7 +93,7 @@ const BlogCard = ({ blog }) => {
             onClick={handleDeleteFromWishlist}
             className="px-4 py-2 bg-red-600 text-white font-semibold hover:scale-95 duration-200"
           >
-            Delete From Wishlist
+            Remove From Wishlist
           </button>
         ) : (
           <button

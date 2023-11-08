@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Wishlist = () => {
-  const wishlistDetails = useGetWishlist();
+  const { wishlistDetails } = useGetWishlist();
   const [wishlistBlogs, setWishlistBlogs] = useState([]);
 
   useEffect(() => {
