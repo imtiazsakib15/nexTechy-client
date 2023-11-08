@@ -23,7 +23,7 @@ const UpdateBlog = () => {
     },
   });
 
-  const handleAddBlog = (event) => {
+  const handleAddBlog = async(event) => {
     event.preventDefault();
     const form = event.target;
 
@@ -36,7 +36,7 @@ const UpdateBlog = () => {
     const time = Date.now();
 
     const blog = { title, image, category, short_desc, long_desc, time };
-    mutation.mutate(blog);
+    await mutation.mutate(blog);
 
     if (mutation?.data?.data?.modifiedCount) {
       toast.success("Blog Updated Successfully!");

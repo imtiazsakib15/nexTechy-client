@@ -1,44 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import useTimeDifference from "../hooks/useTimeDifference";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import useGetWishlist from "../hooks/useGetWishlist";
+import useUpdateWishlist from "../hooks/useUpdateWishlist";
 
 const BlogCard = ({ blog }) => {
   const calculateTimeDifference = useTimeDifference();
   const { _id, title, category, image, time, short_desc } = blog;
   const { user } = useAuth();
-  const wishlist = useGetWishlist();
-
-  const mutation = useMutation({
-    mutationFn: async (updatedWishlist) => {
-      return await axios.put(
-        `http://localhost:5000/api/v1/blogs/wishlist/${user?.email}`,
-        updatedWishlist
-      );
-    },
-  });
+  const wishlistDetails = useGetWishlist();
+  const updateWishlistDetails = useUpdateWishlist();
+  const location = useLocation();
+  console.log(location.pathname);
 
   const handleAddToWishlist = () => {
-    let newWishlist = {};
-    if (wishlist?.wishlist?.length > 0) {
-      const previousWishlist = wishlist.wishlist;
+    let newWishlistDetails = {};
+    if (wishlistDetails?.wishlist?.length > 0) {
+      const previousWishlist = wishlistDetails.wishlist;
       if (previousWishlist.includes(_id)) return toast.error("Already Added!");
-      newWishlist = {
+      newWishlistDetails = {
         email: user?.email,
         wishlist: [...previousWishlist, _id],
       };
     } else {
-      newWishlist = { email: user?.email, wishlist: [_id] };
+      newWishlistDetails = { email: user?.email, wishlist: [_id] };
     }
 
-    mutation.mutate(newWishlist);
-    const result = mutation?.data?.data;
+    updateWishlistDetails.mutate(newWishlistDetails);
+    const result = updateWishlistDetails?.data?.data;
     if (result?.modifiedCount === 1 || result?.upsertedCount === 1)
       toast.success("Successfully Add To Wishlist!");
   };
@@ -73,12 +66,18 @@ const BlogCard = ({ blog }) => {
             Read More...
           </Link>
         </p>
-        <button
-          onClick={handleAddToWishlist}
-          className="px-4 py-2 bg-black text-white font-semibold hover:scale-95 duration-200"
-        >
-          Add To Wishlist
-        </button>
+        {location.pathname === "/wishlist" ? (
+          <button className="px-4 py-2 bg-red-600 text-white font-semibold hover:scale-95 duration-200">
+            Delete From Wishlist
+          </button>
+        ) : (
+          <button
+            onClick={handleAddToWishlist}
+            className="px-4 py-2 bg-black text-white font-semibold hover:scale-95 duration-200"
+          >
+            Add To Wishlist
+          </button>
+        )}
       </div>
     </div>
   );
