@@ -1,8 +1,17 @@
-# React + Vite
+## The name of the website is '[nexTechy](https://nextechy-97707.web.app/)'
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live link of this website - https://electra-2351c.web.app
 
-Currently, two official plugins are available:
+## Features and Functionalities of this website
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- In home page, anyone can see recent blogs
+
+- Anyone can make subscribe newsletter for getting latest updates
+
+- A user can see the blogs of each category
+
+- A user can see the featured blogs in a page
+
+- A user can add blogs to wishlist for reading later
+
+- A user can delete any blog from wishlist
