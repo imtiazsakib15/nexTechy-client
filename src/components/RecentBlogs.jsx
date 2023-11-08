@@ -8,9 +8,7 @@ const RecentBlogs = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["recentBlogs"],
     queryFn: () =>
-      axios.get(
-        "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/recent-blogs"
-      ),
+      axios.get("https://nex-techy-server.vercel.app/api/v1/recent-blogs"),
   });
   const blogs = data?.data || [];
 

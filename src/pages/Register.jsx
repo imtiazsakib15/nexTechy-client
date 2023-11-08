@@ -43,7 +43,7 @@ const Register = () => {
         // Access token
         axios
           .post(
-            "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/jwt",
+            "https://nex-techy-server.vercel.app/api/v1/jwt",
             { email: user.email },
             {
               withCredentials: true,
@@ -75,7 +75,7 @@ const Register = () => {
         // Access token
         axios
           .post(
-            "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/jwt",
+            "https://nex-techy-server.vercel.app/api/v1/jwt",
             { email: userCredential.user.email },
             {
               withCredentials: true,

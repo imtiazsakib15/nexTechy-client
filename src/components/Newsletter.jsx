@@ -11,7 +11,7 @@ const Newsletter = () => {
     const subscribeNewsletterId = toast.loading("Please Wait!");
     axios
       .post(
-        "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/newsletter-subscriber",
+        "https://nex-techy-server.vercel.app/api/v1/newsletter-subscriber",
         { email }
       )
       .then(() => {

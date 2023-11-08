@@ -12,7 +12,7 @@ const Wishlist = () => {
     let wishlistIds = wishlistDetails?.wishlist || [];
     axios
       .post(
-        "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/my-wishlist",
+        "https://nex-techy-server.vercel.app/api/v1/blogs/my-wishlist",
         wishlistIds
       )
       .then((res) => setWishlistBlogs(res.data));

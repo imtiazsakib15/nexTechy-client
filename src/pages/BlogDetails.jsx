@@ -15,9 +15,7 @@ const BlogDetails = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["allBlogs"],
     queryFn: () =>
-      axios.get(
-        `https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/${id}`
-      ),
+      axios.get(`https://nex-techy-server.vercel.app/api/v1/blogs/${id}`),
   });
 
   const { author, category, image, long_desc, short_desc, time, title, _id } =

@@ -8,7 +8,7 @@ const useGetWishlist = () => {
     queryKey: ["wishlist"],
     queryFn: () =>
       axios.get(
-        `https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/wishlist/${user?.email}`
+        `https://nex-techy-server.vercel.app/api/v1/blogs/wishlist/${user?.email}`
       ),
   });
   const wishlistDetails = data?.data;
