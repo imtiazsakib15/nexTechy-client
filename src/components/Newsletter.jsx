@@ -27,7 +27,7 @@ const Newsletter = () => {
   return (
     <SectionContainer>
       <div className="border rounded-lg shadow-md my-20 px-4 py-6">
-        <h3 className="text-2xl font-semibold">Get more updates...</h3>
+        <h3 className="text-2xl font-semibold">SIGN UP FOR DAILY NEWSLETTER</h3>
         <p className="mt-1">
           Do you want to get notified when a new blog is released? Sign up for
           our newsletter and you&apos;ll be among the first to find out about
