@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
 const Login = () => {
   const { signIn, googleSignIn } = useAuth();
@@ -17,8 +18,22 @@ const Login = () => {
 
     const loginToastId = toast.loading("Please Wait");
     signIn(email, password)
-      .then(() => {
+      .then((userCredential) => {
         toast.success("Log In Successfully!", { id: loginToastId });
+
+        // Access token
+        axios
+          .post(
+            "http://localhost:5000/api/v1/jwt",
+            { email: userCredential.user.email },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+          });
+
         navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
@@ -29,8 +44,22 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     const googleLoginToastId = toast.loading("Please Wait");
     googleSignIn()
-      .then(() => {
+      .then((userCredential) => {
         toast.success("Sign In Successfully!", { id: googleLoginToastId });
+        
+        // Access token
+        axios
+          .post(
+            "http://localhost:5000/api/v1/jwt",
+            { email: userCredential.user.email },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+          });
+
         navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
