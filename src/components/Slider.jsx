@@ -10,16 +10,16 @@ import Slide from "./Slide";
 const Slider = () => {
   const slides = [
     {
-      img: "https://i.ibb.co/BcDJxJB/slide-1.jpg",
-      quote:
-        "Technology empowers people to do what they want to do. It lets people be creative.",
-      author: "Steve Ballmer",
-    },
-    {
       img: "https://i.ibb.co/YtRptPG/slide-2.jpg",
       quote:
         "The computer was born to solve problems that did not exist before.",
       author: "Bill Gates",
+    },
+    {
+      img: "https://i.ibb.co/BcDJxJB/slide-1.jpg",
+      quote:
+        "Technology empowers people to do what they want to do. It lets people be creative.",
+      author: "Steve Ballmer",
     },
     {
       img: "https://i.ibb.co/mDd52kY/slide-3.jpg",

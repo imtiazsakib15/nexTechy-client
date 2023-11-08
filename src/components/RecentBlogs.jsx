@@ -10,13 +10,13 @@ const RecentBlogs = () => {
     queryFn: () => axios.get("http://localhost:5000/api/v1/recent-blogs"),
   });
   const blogs = data?.data || [];
+
   if (error)
     return (
       <h2 className="grid place-items-center h-[80vh] text-xl md:text-4xl font-bold">
         An Error Occured! Please Try Again!
       </h2>
     );
-
   return (
     <SectionContainer>
       <h2 className="text-4xl font-bold text-center mt-14 mb-8">

@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import useGetWishlist from "../hooks/useGetWishlist";
 import useUpdateWishlist from "../hooks/useUpdateWishlist";
+import { motion } from "framer-motion";
 
 const BlogCard = ({ blog }) => {
   const calculateTimeDifference = useTimeDifference();
@@ -17,6 +18,7 @@ const BlogCard = ({ blog }) => {
   const location = useLocation();
 
   const handleAddToWishlist = () => {
+    if (!user?.email) return toast.error("Please Log In First");
     const addToWishlistId = toast.loading("Please Wait");
     let newWishlistDetails = {};
     if (wishlistDetails?.email) {
@@ -59,7 +61,16 @@ const BlogCard = ({ blog }) => {
   };
 
   return (
-    <div className="p-5 border shadow rounded">
+    <motion.div
+      className="p-5 border shadow rounded"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.8,
+        delay: 0.5,
+        ease: [0, 0.71, 0.2, 1.01],
+      }}
+    >
       <PhotoProvider>
         <PhotoView src={image}>
           <img
@@ -104,7 +115,7 @@ const BlogCard = ({ blog }) => {
           </button>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 BlogCard.propTypes = {

@@ -18,13 +18,17 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
 
+    if (password.length < 6) {
+      toast.error("Password should have at least 6 characters");
+      return;
+    }
     if (
       !/[0-9]/.test(password) &&
       !/[A-Z]/.test(password) &&
       !/[^a-zA-Z0-9]/.test(password)
     ) {
       toast.error(
-        "Password have a capital letter, a special character and  a numeric character"
+        "Password should have a capital letter, a special character and a numeric character"
       );
       return;
     }
@@ -38,17 +42,13 @@ const Register = () => {
         updateProfile(auth.currentUser, {
           displayName: name,
           photoURL: photo,
-        })
-          .then(() => {})
-          .catch((error) => {
-            toast.error(error.message, { id: registerToastId });
-          });
+        }).then(() => {});
         user.displayName = name;
         user.photoURL = photo;
         navigate("/");
       })
       .catch((error) => {
-        toast.error(error.message);
+        toast.error(error.message, { id: registerToastId });
       });
   };
 
