@@ -80,7 +80,7 @@ const BlogCard = ({ blog }) => {
         </div>
         <h4 className="text-xl font-bold">{title}</h4>
         <p>
-          {short_desc.split(" ").slice(0, 15).join(" ")}{" "}
+          {short_desc?.split(" ")?.slice(0, 15)?.join(" ")}{" "}
           <Link
             to={`/blogs/${_id}`}
             className="text-blue-700 font-bold underline"
