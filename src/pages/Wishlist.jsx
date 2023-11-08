@@ -8,12 +8,12 @@ const Wishlist = () => {
   const wishlistDetails = useGetWishlist();
   const [wishlistBlogs, setWishlistBlogs] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     let wishlistIds = wishlistDetails?.wishlist || [];
     axios
-    .post("http://localhost:5000/api/v1/blogs/my-wishlist", wishlistIds)
-    .then((res) => setWishlistBlogs(res.data));
-  },[wishlistDetails?.wishlist])
+      .post("http://localhost:5000/api/v1/blogs/my-wishlist", wishlistIds)
+      .then((res) => setWishlistBlogs(res.data));
+  }, [wishlistDetails?.wishlist]);
 
   return (
     <div className="pt-10 pb-16">

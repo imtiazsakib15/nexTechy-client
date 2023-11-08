@@ -14,7 +14,7 @@ const UpdateBlog = () => {
     setBlog(res.data);
   });
 
-  const mutation = useMutation({
+  const updateBlog = useMutation({
     mutationFn: async (updatedBlog) => {
       return await axios.patch(
         `http://localhost:5000/api/v1/blogs/update/${id}/edit`,
@@ -23,7 +23,7 @@ const UpdateBlog = () => {
     },
   });
 
-  const handleAddBlog = async(event) => {
+  const handleAddBlog = async (event) => {
     event.preventDefault();
     const form = event.target;
 
@@ -36,11 +36,14 @@ const UpdateBlog = () => {
     const time = Date.now();
 
     const blog = { title, image, category, short_desc, long_desc, time };
-    await mutation.mutate(blog);
 
-    if (mutation?.data?.data?.modifiedCount) {
-      toast.success("Blog Updated Successfully!");
-    }
+    updateBlog.mutate(blog, {
+      onSuccess: (result) => {
+        if (result?.data?.modifiedCount) {
+          toast.success("Blog Updated Successfully!");
+        }
+      },
+    });
   };
 
   return (

@@ -13,15 +13,17 @@ const BlogCard = ({ blog }) => {
   const { _id, title, category, image, time, short_desc } = blog;
   const { user } = useAuth();
   const wishlistDetails = useGetWishlist();
-  const updateWishlistDetails = useUpdateWishlist();
+  const updateWishlist = useUpdateWishlist();
   const location = useLocation();
-  console.log(location.pathname);
-
+  console.log(wishlistDetails?.email);
   const handleAddToWishlist = () => {
     let newWishlistDetails = {};
-    if (wishlistDetails?.wishlist?.length > 0) {
+    if (wishlistDetails?.email) {
       const previousWishlist = wishlistDetails.wishlist;
-      if (previousWishlist.includes(_id)) return toast.error("Already Added!");
+      if (previousWishlist.includes(_id)) {
+        toast.error("Already Added!");
+        return;
+      }
       newWishlistDetails = {
         email: user?.email,
         wishlist: [...previousWishlist, _id],
@@ -30,11 +32,16 @@ const BlogCard = ({ blog }) => {
       newWishlistDetails = { email: user?.email, wishlist: [_id] };
     }
 
-    updateWishlistDetails.mutate(newWishlistDetails);
-    const result = updateWishlistDetails?.data?.data;
-    if (result?.modifiedCount === 1 || result?.upsertedCount === 1)
-      toast.success("Successfully Add To Wishlist!");
+    updateWishlist.mutate(newWishlistDetails, {
+      onSuccess: (result) => {
+        console.log(result?.data);
+        if (result?.data?.modifiedCount === 1 || result?.upsertedCount === 1)
+          toast.success("Successfully Add To Wishlist!");
+      },
+    });
   };
+
+  const handleDeleteFromWishlist = () => {};
 
   return (
     <div className="p-5 border shadow rounded">
@@ -67,7 +74,10 @@ const BlogCard = ({ blog }) => {
           </Link>
         </p>
         {location.pathname === "/wishlist" ? (
-          <button className="px-4 py-2 bg-red-600 text-white font-semibold hover:scale-95 duration-200">
+          <button
+            onClick={handleDeleteFromWishlist}
+            className="px-4 py-2 bg-red-600 text-white font-semibold hover:scale-95 duration-200"
+          >
             Delete From Wishlist
           </button>
         ) : (

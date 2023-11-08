@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const AddBlog = () => {
   const { user } = useAuth();
-  const mutation = useMutation({
+  const addNewBlog = useMutation({
     mutationFn: async (newBlog) => {
       return await axios.post(
         "http://localhost:5000/api/v1/blogs/new",
@@ -43,13 +43,17 @@ const AddBlog = () => {
       author,
     };
 
-    mutation.mutate(blog);
-    if (mutation?.data?.data?.insertedId) {
-      console.log(mutation?.data);
-      toast.success("Add Blog Successfully!");
-      form.reset();
-    }
+    addNewBlog.mutate(blog, {
+      onSuccess: (result) => {
+        console.log(result?.data);
+        if (result?.data?.insertedId) {
+          toast.success("Add Blog Successfully!");
+          form.reset();
+        }
+      },
+    });
   };
+  
   return (
     <div className="mt-12 mb-20">
       <SectionContainer>
