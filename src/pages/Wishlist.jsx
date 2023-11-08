@@ -11,7 +11,10 @@ const Wishlist = () => {
   useEffect(() => {
     let wishlistIds = wishlistDetails?.wishlist || [];
     axios
-      .post("http://localhost:5000/api/v1/blogs/my-wishlist", wishlistIds)
+      .post(
+        "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/my-wishlist",
+        wishlistIds
+      )
       .then((res) => setWishlistBlogs(res.data));
   }, [wishlistDetails?.wishlist]);
 

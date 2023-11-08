@@ -24,7 +24,7 @@ const Login = () => {
         // Access token
         axios
           .post(
-            "http://localhost:5000/api/v1/jwt",
+            "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/jwt",
             { email: userCredential.user.email },
             {
               withCredentials: true,
@@ -46,11 +46,11 @@ const Login = () => {
     googleSignIn()
       .then((userCredential) => {
         toast.success("Sign In Successfully!", { id: googleLoginToastId });
-        
+
         // Access token
         axios
           .post(
-            "http://localhost:5000/api/v1/jwt",
+            "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/jwt",
             { email: userCredential.user.email },
             {
               withCredentials: true,

@@ -10,14 +10,18 @@ const UpdateBlog = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState({});
 
-  axios.get(`http://localhost:5000/api/v1/blogs/${id}`).then((res) => {
-    setBlog(res.data);
-  });
+  axios
+    .get(
+      `https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/${id}`
+    )
+    .then((res) => {
+      setBlog(res.data);
+    });
 
   const updateBlog = useMutation({
     mutationFn: async (updatedBlog) => {
       return await axios.patch(
-        `http://localhost:5000/api/v1/blogs/update/${id}/edit`,
+        `https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/update/${id}/edit`,
         updatedBlog
       );
     },

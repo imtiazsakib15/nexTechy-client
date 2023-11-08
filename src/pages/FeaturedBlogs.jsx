@@ -6,7 +6,10 @@ import DataTable from "react-data-table-component";
 const FeaturedBlogs = () => {
   const { error, data } = useQuery({
     queryKey: ["recentBlogs"],
-    queryFn: () => axios.get("http://localhost:5000/api/v1/featured-blogs"),
+    queryFn: () =>
+      axios.get(
+        "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/featured-blogs"
+      ),
   });
   const featuredBlogs = data?.data || [];
 

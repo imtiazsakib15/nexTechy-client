@@ -7,10 +7,13 @@ const Newsletter = () => {
   const handleSubscribe = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
-    
+
     const subscribeNewsletterId = toast.loading("Please Wait!");
     axios
-      .post("http://localhost:5000/api/v1/newsletter-subscriber", { email })
+      .post(
+        "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/newsletter-subscriber",
+        { email }
+      )
       .then(() => {
         toast.success("Thank you for subscribing newsletter.", {
           id: subscribeNewsletterId,

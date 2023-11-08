@@ -10,7 +10,7 @@ const AddBlog = () => {
   const addNewBlog = useMutation({
     mutationFn: async (newBlog) => {
       return await axios.post(
-        "http://localhost:5000/api/v1/blogs/new",
+        "https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/new",
         newBlog
       );
     },

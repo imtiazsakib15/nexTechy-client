@@ -7,7 +7,9 @@ const useGetWishlist = () => {
   const { data, refetch: wishlistRefetch } = useQuery({
     queryKey: ["wishlist"],
     queryFn: () =>
-      axios.get(`http://localhost:5000/api/v1/blogs/wishlist/${user?.email}`),
+      axios.get(
+        `https://nex-techy-server-j3ujcuwko-imtiaz-ahmeds-projects.vercel.app/api/v1/blogs/wishlist/${user?.email}`
+      ),
   });
   const wishlistDetails = data?.data;
   return { wishlistDetails, wishlistRefetch };
