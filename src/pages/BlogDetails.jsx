@@ -30,7 +30,13 @@ const BlogDetails = () => {
       );
     },
   });
-
+  const { data: commentsData, refetch: commentsRefetch } = useQuery({
+    queryKey: ["comments"],
+    queryFn: () =>
+      axios.get(`http://localhost:5000/api/v1/blogs/${id}/comments`),
+  });
+  const comments = commentsData?.data || [];
+  console.log(comments);
   const handleCommentPost = (event) => {
     event.preventDefault();
     const comment = event.target.comment.value;
@@ -45,6 +51,7 @@ const BlogDetails = () => {
         console.log(result?.data);
         if (result?.data?.insertedId) {
           event.target.reset();
+          commentsRefetch();
         }
       },
     });
@@ -117,9 +124,9 @@ const BlogDetails = () => {
               Author can not comment on own blog
             </p>
           ) : (
-            <form onSubmit={handleCommentPost} className="max-w-sm">
+            <form onSubmit={handleCommentPost} className="max-w-md">
               <label
-                htmlFor="short_desc"
+                htmlFor="comment"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Your Comment
@@ -127,13 +134,13 @@ const BlogDetails = () => {
               <textarea
                 id="comment"
                 name="comment"
-                rows="2"
+                rows="4"
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                 required
               ></textarea>
               <button
                 type="submit"
-                className="text-white bg-black px-8 py-2 mt-2"
+                className="text-white bg-black px-8 py-2 mt-4"
               >
                 Post
               </button>
@@ -141,7 +148,18 @@ const BlogDetails = () => {
           )}
         </div>
 
-        <div className="my-12"></div>
+        <div className="my-12 space-y-5">
+          {comments?.length > 0 &&
+            comments.map(comment =>
+              <div key={comment?._id} className="flex gap-2 max-w-md">
+                <img className="w-10 h-10 rounded-full border-2 border-blue-500" src={comment?.author?.photo} alt={comment?.author?.name} />
+                <div>
+                  <h4 className="text-sm font-semibold">{comment?.author?.name}</h4>
+                  <p>{comment?.comment}</p>
+                </div>
+              </div>
+            )}
+        </div>
       </div>
     </div>
   );
