@@ -36,10 +36,13 @@ const BlogCard = ({ blog }) => {
 
     updateWishlist.mutate(newWishlistDetails, {
       onSuccess: (result) => {
-        if (result?.data?.modifiedCount === 1 || result?.upsertedCount === 1)
+        if (result?.data?.modifiedCount === 1 || result?.upsertedCount === 1) {
           toast.success("Successfully Add To Wishlist!", {
             id: addToWishlistId,
           });
+
+          wishlistRefetch();
+        }
       },
     });
   };

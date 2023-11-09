@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import useAuth from "./useAuth";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useGetWishlist = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const { data, refetch: wishlistRefetch } = useQuery({
     queryKey: ["wishlist"],
     queryFn: () =>
-      axios.get(
+      axiosSecure.get(
         `https://nex-techy-server.vercel.app/api/v1/blogs/wishlist/${user?.email}`
       ),
   });

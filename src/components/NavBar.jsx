@@ -6,6 +6,7 @@ import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Button from "./Button";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const NavBar = () => {
   const { user, logOut } = useAuth();
@@ -16,6 +17,13 @@ const NavBar = () => {
     logOut()
       .then(() => {
         toast.success("Log Out Successfully!", { id: logOutToastId });
+        axios
+          .post("https://nex-techy-server.vercel.app/api/v1/logout", {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
       })
       .catch((error) => {
         toast.error(error.message, { id: logOutToastId });

@@ -13,7 +13,7 @@ const AllBlogs = () => {
     queryKey: ["allBlogs"],
     queryFn: () =>
       axios.get(
-        `http://localhost:5000/api/v1/blogs?category=${categoryRef.current.value}&title=${titleRef.current.value}`
+        `https://nex-techy-server.vercel.app/api/v1/blogs?category=${categoryRef.current.value}&title=${titleRef.current.value}`
       ),
   });
   const blogs = data?.data || [];

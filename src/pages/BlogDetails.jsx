@@ -25,7 +25,7 @@ const BlogDetails = () => {
   const addComment = useMutation({
     mutationFn: async (comment) => {
       return await axios.post(
-        `http://localhost:5000/api/v1/blogs/comments`,
+        `https://nex-techy-server.vercel.app/api/v1/blogs/comments`,
         comment
       );
     },
@@ -33,7 +33,9 @@ const BlogDetails = () => {
   const { data: commentsData, refetch: commentsRefetch } = useQuery({
     queryKey: ["comments"],
     queryFn: () =>
-      axios.get(`http://localhost:5000/api/v1/blogs/${id}/comments`),
+      axios.get(
+        `https://nex-techy-server.vercel.app/api/v1/blogs/${id}/comments`
+      ),
   });
   const comments = commentsData?.data || [];
   console.log(comments);
@@ -150,15 +152,21 @@ const BlogDetails = () => {
 
         <div className="my-12 space-y-5">
           {comments?.length > 0 &&
-            comments.map(comment =>
+            comments.map((comment) => (
               <div key={comment?._id} className="flex gap-2 max-w-md">
-                <img className="w-10 h-10 rounded-full border-2 border-blue-500" src={comment?.author?.photo} alt={comment?.author?.name} />
+                <img
+                  className="w-10 h-10 rounded-full border-2 border-blue-500"
+                  src={comment?.author?.photo}
+                  alt={comment?.author?.name}
+                />
                 <div>
-                  <h4 className="text-sm font-semibold">{comment?.author?.name}</h4>
+                  <h4 className="text-sm font-semibold">
+                    {comment?.author?.name}
+                  </h4>
                   <p>{comment?.comment}</p>
                 </div>
               </div>
-            )}
+            ))}
         </div>
       </div>
     </div>
