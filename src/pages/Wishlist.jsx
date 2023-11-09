@@ -5,18 +5,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Wishlist = () => {
-  const { wishlistDetails } = useGetWishlist();
+  const { wishlistDetails, wishlistRefetch } = useGetWishlist();
   const [wishlistBlogs, setWishlistBlogs] = useState([]);
 
   useEffect(() => {
     let wishlistIds = wishlistDetails?.wishlist || [];
     axios
-      .post(
-        "https://nex-techy-server.vercel.app/api/v1/blogs/my-wishlist",
-        wishlistIds
-      )
-      .then((res) => setWishlistBlogs(res.data));
-  }, [wishlistDetails?.wishlist]);
+      .post("http://localhost:5000/api/v1/blogs/my-wishlist", wishlistIds)
+      .then((res) => {
+        setWishlistBlogs(res.data);
+        wishlistRefetch();
+      });
+  }, [wishlistDetails?.wishlist, wishlistRefetch]);
 
   return (
     <div className="pt-10 pb-16">

@@ -13,7 +13,7 @@ const AllBlogs = () => {
     queryKey: ["allBlogs"],
     queryFn: () =>
       axios.get(
-        `https://nex-techy-server.vercel.app/api/v1/blogs?category=${categoryRef.current.value}&title=${titleRef.current.value}`
+        `http://localhost:5000/api/v1/blogs?category=${categoryRef.current.value}&title=${titleRef.current.value}`
       ),
   });
   const blogs = data?.data || [];
@@ -65,10 +65,11 @@ const AllBlogs = () => {
             <input
               type="text"
               ref={titleRef}
+              defaultValue=""
               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
             <button className="text-white bg-black font-semibold rounded-lg px-4 py-2">
-              search
+              Search
             </button>
           </div>
         </form>

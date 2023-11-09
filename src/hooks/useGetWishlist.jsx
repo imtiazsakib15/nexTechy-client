@@ -11,7 +11,7 @@ const useGetWishlist = () => {
         `https://nex-techy-server.vercel.app/api/v1/blogs/wishlist/${user?.email}`
       ),
   });
-  const wishlistDetails = data?.data;
+  const wishlistDetails = data?.data || {};
   return { wishlistDetails, wishlistRefetch };
 };
 
