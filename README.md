@@ -1,6 +1,6 @@
-## The name of the website is '[nexTechy](https://nextechy-97707.web.app/)'
+## The name of the website is '[nexTechy](https://nextechy-97707.web.app)'
 
-Live link of this website - https://electra-2351c.web.app
+Live link of this website - https://nextechy-97707.web.app
 
 ## Features and Functionalities of this website
 
