@@ -15,3 +15,23 @@ Live link of this website - https://nextechy-97707.web.app
 - A user can add blogs to wishlist for reading later
 
 - A user can delete any blog from wishlist
+
+## Technologies Used In This Website
+
+- React
+
+- JavaScript
+
+- Tailwind CSS
+
+- Node Js
+
+- Express Js
+
+- MongoDb
+
+- Firebase
+
+- Axios
+
+- Tanstack Query
