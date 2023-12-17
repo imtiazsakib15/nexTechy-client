@@ -16,17 +16,18 @@ const useAxiosSecure = () => {
       },
       (error) => {
         if (error.response.status === 401 || error.response.status === 403) {
-          logOut()
-            .then((result) => {
-              console.log(result);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+          console.log(error);
+          // logOut()
+          //   .then((result) => {
+          //     console.log(result);
+          //   })
+          //   .catch((error) => {
+          //     console.log(error);
+          //   });
         }
       }
     );
-  }, []);
+  }, [logOut]);
   return axiosSecure;
 };
 

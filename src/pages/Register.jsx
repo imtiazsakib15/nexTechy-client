@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import auth from "../config/firebase.config";
 import { updateProfile } from "firebase/auth";
-import axios from "axios";
 
 const Register = () => {
   const { createUser, googleSignIn } = useAuth();
@@ -40,19 +39,6 @@ const Register = () => {
         const user = userCredential.user;
         toast.success("Register Successfully!", { id: registerToastId });
 
-        // Access token
-        axios
-          .post(
-            "https://nex-techy-server.vercel.app/api/v1/jwt",
-            { email: user.email },
-            {
-              withCredentials: true,
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-          });
-
         updateProfile(auth.currentUser, {
           displayName: name,
           photoURL: photo,
@@ -69,21 +55,9 @@ const Register = () => {
   const handleGoogleSignIn = () => {
     const googleLoginToastId = toast.loading("Please Wait");
     googleSignIn()
-      .then((userCredential) => {
+      .then(() => {
         toast.success("Sign In Successfully!", { id: googleLoginToastId });
 
-        // Access token
-        axios
-          .post(
-            "https://nex-techy-server.vercel.app/api/v1/jwt",
-            { email: userCredential.user.email },
-            {
-              withCredentials: true,
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-          });
         navigate("/");
       })
       .catch((error) => {

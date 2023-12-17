@@ -18,21 +18,8 @@ const Login = () => {
 
     const loginToastId = toast.loading("Please Wait");
     signIn(email, password)
-      .then((userCredential) => {
+      .then(() => {
         toast.success("Log In Successfully!", { id: loginToastId });
-
-        // Access token
-        axios
-          .post(
-            "https://nex-techy-server.vercel.app/api/v1/jwt",
-            { email: userCredential.user.email },
-            {
-              withCredentials: true,
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-          });
 
         navigate(location?.state ? location?.state : "/");
       })
@@ -44,21 +31,8 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     const googleLoginToastId = toast.loading("Please Wait");
     googleSignIn()
-      .then((userCredential) => {
+      .then(() => {
         toast.success("Sign In Successfully!", { id: googleLoginToastId });
-
-        // Access token
-        axios
-          .post(
-            "https://nex-techy-server.vercel.app/api/v1/jwt",
-            { email: userCredential.user.email },
-            {
-              withCredentials: true,
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-          });
 
         navigate(location?.state ? location?.state : "/");
       })

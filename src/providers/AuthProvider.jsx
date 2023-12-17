@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -39,6 +40,20 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
       setUser(currentUser);
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
+
+      // Issue an access token
+      if (currentUser) {
+        axios
+          .post("https://nex-techy-server.vercel.app/api/v1/jwt", loggedUser, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
+      }
+
       setLoading(false);
     });
     return () => {
